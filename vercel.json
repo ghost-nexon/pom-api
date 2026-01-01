@@ -1,6 +1,5 @@
 {
   "name": "pom-api",
   "version": 2,
-  "framework": "express",
-  "output": "dist"
+  "framework": "express"
 }
