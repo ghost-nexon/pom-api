@@ -14,7 +14,7 @@ const categoryUrls = {
   indian: 'https://www.xnxx.com/indian',
   asian: 'https://www.xnxx.com/asian',
   cumshot: 'https://www.xnxx.com/cumshots',
-  desi:'https://www.xnxx.com/desi',
+  desi: 'https://www.xnxx.com/desi',
   // Add more categories as needed
 };
 
@@ -48,7 +48,7 @@ async function scrapeCategory(url) {
   }
 }
 
-// Category endpoints
+// Category endpoint (GET)
 app.get('/api/videos/:category', async (req, res) => {
   const category = req.params.category.toLowerCase();
   const url = categoryUrls[category];
@@ -65,19 +65,14 @@ app.get('/api/videos/:category', async (req, res) => {
   }
 });
 
-// Optional: Add a search endpoint for flexibility
-app.get('/api/search', async (req, res) => {
-  const query = req.query.q || 'all';
-  const url = `https://www.xnxx.com/search?search=${query}`;
+// Search endpoint (POST)
+app.post('/api/search', async (req, res) => {
+  const query = req.body.q || 'all';
+  const url = `https://www.xnxx.com/search?search=${encodeURIComponent(query)}`;
   try {
     const videos = await scrapeCategory(url);
     res.json(videos);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch search results' });
   }
-});
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
