@@ -9,12 +9,12 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Base XNXX category URLs
+// Base XNXX category URLs (updated to xnxxhindi.xyz)
 const categoryUrls = {
-  indian: 'https://www.xnxx.com/indian',
-  asian: 'https://www.xnxx.com/asian',
-  cumshot: 'https://www.xnxx.com/cumshots',
-  desi: 'https://www.xnxx.com/desi',
+  indian: 'https://xnxxhindi.xyz/indian',
+  asian: 'https://xnxxhindi.xyz/asian',
+  cumshot: 'https://xnxxhindi.xyz/cumshots',
+  desi: 'https://xnxxhindi.xyz/desi',
   // Add more categories as needed
 };
 
@@ -25,6 +25,7 @@ async function scrapeCategory(url) {
     const $ = cheerio.load(data);
     const results = [];
 
+    // Check if the website structure is different
     $('.video-item').each((i, el) => {
       const title = $(el).find('h3').text().trim();
       const videoLink = $(el).find('a').attr('href');
@@ -34,7 +35,7 @@ async function scrapeCategory(url) {
       if (title && videoLink) {
         results.push({
           title,
-          videoLink: `https://www.xnxx.com${videoLink}`, // Ensure full URL
+          videoLink: `https://xnxxhindi.xyz${videoLink}`, // Ensure full URL
           duration,
           thumbnail,
         });
@@ -68,7 +69,7 @@ app.get('/api/videos/:category', async (req, res) => {
 // Search endpoint (POST)
 app.post('/api/search', async (req, res) => {
   const query = req.body.q || 'all';
-  const url = `https://www.xnxx.com/search?search=${encodeURIComponent(query)}`;
+  const url = `https://xnxxhindi.xyz/search?search=${encodeURIComponent(query)}`;
   try {
     const videos = await scrapeCategory(url);
     res.json(videos);
