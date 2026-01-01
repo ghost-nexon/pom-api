@@ -1,6 +1,9 @@
-  {
-    "name": "pom-api",
-    "version": 2,
-    "framework": "express",
-    "output": "dist"
-  }
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/server.js"
+    }
+  ]
+}
